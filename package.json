@@ -1,0 +1,26 @@
+{
+  "name": "ebangla-epub",
+  "version": "1.0.0",
+  "description": "",
+  "type": "module",
+  "main": "src/index.js",
+  "scripts": {
+    "gen": "node src/index.js",
+    "lint": "eslint",
+    "test": "echo \"Error: no test specified\" && exit 1"
+  },
+  "author": "Zahidul Hossain",
+  "license": "MIT",
+  "dependencies": {
+    "axios": "^1.7.2",
+    "cheerio": "^1.0.0-rc.12",
+    "jszip": "^3.10.1",
+    "nanoid": "^5.0.7"
+  },
+  "devDependencies": {
+    "@eslint/js": "^9.3.0",
+    "eslint": "^9.3.0",
+    "globals": "^15.3.0",
+    "prettier": "3.2.5"
+  }
+}
