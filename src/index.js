@@ -1,6 +1,5 @@
 import path from "path";
 import { downloadImage } from "./utils/downloadCover.js";
-import { generateToc } from "./templates/generateToc.js";
 import { nanoid } from "nanoid";
 
 import { downloadSinglePage } from "./single.js";
@@ -9,46 +8,47 @@ import { loadData } from "./utils/loadData.js";
 import { writeFile } from "./utils/writeFile.js";
 import { cleanFolder } from "./utils/cleanFolder.js";
 import { bundleEpub } from "./utils/bundleEpub.js";
-import { generateContent } from "./templates/generateContent.js";
-import { generateContainer } from "./templates/generateContainer.js";
 
 const URL =
   "https://www.ebanglalibrary.com/books/%e0%a6%aa%e0%a6%b0%e0%a6%be%e0%a6%b0%e0%a7%8d%e0%a6%a5%e0%a6%aa%e0%a6%b0%e0%a6%a4%e0%a6%be%e0%a6%b0-%e0%a6%85%e0%a6%b0%e0%a7%8d%e0%a6%a5%e0%a6%a8%e0%a7%80%e0%a6%a4%e0%a6%bf-%e0%a6%86%e0%a6%95/";
 const coverImagePath = path.resolve("./temp/cover.jpg");
-// const outputToc = `./temp/OEBPS/toc.xhtml`;
 
 // Usage
 const outputFolder = "./temp/OEBPS";
 cleanFolder(outputFolder);
 
-const { $ } = await loadData({
+const { document } = await loadData({
   url: URL,
 });
 
 const epub = {
-  title: $("title").text(),
-  author: $(".entry-terms-authors a").text(),
+  title: document.querySelector("title").textContent,
+  author:
+    document.querySelector(".entry-terms-authors a")?.textContent ||
+    "unknown author", // Safe navigation in case the element doesn't exist
   publisher: "anonymous",
-  description: $("title").text(),
-  tags: $(".entry-terms-ld_course_category a").text(),
-  chapters: [],
+  description: document.querySelector("title").textContent,
+  tags: document.querySelector(".entry-terms-ld_course_category a").textContent,
+  chapters: [], // Will be populated later as required
 };
 
 console.log(`Downloading Ebook: ${epub.title}`);
 
-$(".ld-item-list-item .ld-item-name").each((i, element) => {
-  epub.chapters.push({
-    id: nanoid(8),
-    url: $(element).attr("href"),
-    name: $(element).find(".ld-item-title").text().replaceAll("\n", ""),
+document
+  .querySelectorAll(".ld-item-list-item .ld-item-name")
+  .forEach((element) => {
+    epub.chapters.push({
+      id: nanoid(8),
+      url: element.getAttribute("href"),
+      name: element
+        .querySelector(".ld-item-title")
+        .textContent.replace(/\n/g, ""),
+    });
   });
-});
 
-// const tableOfContent = generateToc({ chapters: epub.chapters });
-
-// writeFile({ outputPath: `${outputFolder}/toc.xhtml`, data: tableOfContent });
-
-const coverURL = $(".entry-image-single img").attr("src");
+const coverURL = document
+  .querySelector(".entry-image-single img")
+  .getAttribute("src");
 
 downloadImage(coverURL, coverImagePath)
   .then(() => {
@@ -67,17 +67,13 @@ async function downloadContents() {
       });
       writeFile({ outputPath, data: content });
 
-      console.log(`Downloaded chapter: ${chapter.name}`);
+      console.log(
+        `Downloaded chapter: ${chapter.name} to => ${chapter.id}.xhtml`,
+      );
     }),
   );
 }
 
 await downloadContents();
-
-// const spine = generateContent({ epub });
-// writeFile({ outputPath: `${outputFolder}/content.opf`, data: spine });
-
-// const container = generateContainer();
-// writeFile({ outputPath: `./temp/META-INF/container.xml`, data: container });
 
 bundleEpub({ epub });

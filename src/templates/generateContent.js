@@ -27,13 +27,14 @@ export const generateContent = ({ epub }) => {
     <dc:publisher>${publisher}</dc:publisher>
 
     <meta name="generator" content="choyan.github.io" />
+
     <meta property="dcterms:modified">${modified}</meta>
+    <meta name="cover" content="cover"/>
   </metadata>
 
     <manifest>
+      <item id="titlepage" href="titlepage.xhtml" media-type="application/xhtml+xml"/>
       <item id="toc" href="toc.xhtml" media-type="application/xhtml+xml" properties="nav" />
-      <item id="chapter-image-placeholder" href="images/img-placeholder.jpg" media-type="image/jpeg" />
-
       ${chapters
         .map(
           (chapter) =>
@@ -44,16 +45,17 @@ export const generateContent = ({ epub }) => {
             />`,
         )
         .join("\n")}
+        <item id="cover" href="Images/cover.jpg" media-type="image/jpeg"/>
     </manifest>
-    <spine>
-      <itemref idref="toc"/>
+    <spine toc="ncx">
+      <itemref idref="titlepage"/>
       ${chapters
         .map((chapter) => `<itemref idref="chapter-${chapter.id}" />`)
         .join("\n")}
     </spine>
     <guide>
+      <reference title="Cover" type="cover" href="titlepage.xhtml"/>
       <reference title="Table of content" type="toc" href="toc.xhtml"/>
     </guide>
-</package>
-  `;
+</package>`;
 };

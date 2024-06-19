@@ -1,4 +1,5 @@
-import * as cheerio from "cheerio";
+import { JSDOM } from "jsdom";
+
 import axios from "axios";
 
 export const loadData = async ({ url }) => {
@@ -7,11 +8,12 @@ export const loadData = async ({ url }) => {
     url,
   });
 
-  const $ = cheerio.load(html.data);
+  const dom = new JSDOM(html.data);
 
-  $("br").replaceWith("<br/>");
+  const { document } = dom.window;
 
   return {
-    $,
+    dom,
+    document,
   };
 };

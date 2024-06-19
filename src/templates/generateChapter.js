@@ -9,7 +9,7 @@ ${pageTitle}
 </head>
 <body>
 <section epub:type="bodymatter">
-      <h1>${pageTitle.text()}</h1>
+      <h1>${pageTitle}</h1>
       ${contents.join("\n")}
 </section>
 

@@ -6,6 +6,5 @@ export const writeFile = ({ outputPath, data }) => {
       console.error("Error writing the file:", err);
       return;
     }
-    // console.log(`Content saved to ${outputPath}`);
   });
 };
