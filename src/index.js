@@ -2,22 +2,20 @@ import path from "path";
 import { downloadImage } from "./utils/downloadCover.js";
 import { nanoid } from "nanoid";
 
-import { downloadSinglePage } from "./single.js";
+import { downloadSingleChapter } from "./utils/single.js";
 
 import { loadData } from "./utils/loadData.js";
 import { cleanFolder } from "./utils/cleanFolder.js";
 import { bundleEpub } from "./utils/bundleEpub.js";
+import { COVER_IMAGE_CLASS, DOWNLOAD_URL } from "./config.js";
 
-const URL =
-  "https://www.ebanglalibrary.com/books/%e0%a6%95%e0%a6%a8%e0%a7%8d%e0%a6%9f%e0%a7%8d%e0%a6%b0%e0%a7%8b%e0%a6%b2-%e0%a6%ac%e0%a7%87%e0%a6%97-%e0%a6%ac%e0%a6%be%e0%a6%b8%e0%a7%8d%e0%a6%9f%e0%a6%be%e0%a6%b0%e0%a7%8d%e0%a6%a1-%e0%a7%ad/";
 const coverImagePath = path.resolve("./temp/cover.jpg");
 
-// Usage
 const outputFolder = "./temp/OEBPS";
 cleanFolder(outputFolder);
 
 const { document } = await loadData({
-  url: URL,
+  url: DOWNLOAD_URL,
 });
 
 const epub = {
@@ -45,20 +43,22 @@ document
     });
   });
 
-const coverURL = document
-  .querySelector(".entry-image-single img")
-  .getAttribute("src");
+const coverURL = document.querySelector(COVER_IMAGE_CLASS).getAttribute("src");
 
 await downloadImage(coverURL, coverImagePath);
 
-async function downloadContents({ epub }) {
+async function downloadChapters({ epub }) {
   const downloadPromises = epub.chapters.map((chapter) => {
     const outputPath = `${outputFolder}/${chapter.id}.xhtml`;
-    return downloadSinglePage({ url: chapter.url, outputPath });
+    return downloadSingleChapter({
+      url: chapter.url,
+      outputPath,
+      name: chapter.name,
+    });
   });
   await Promise.all(downloadPromises);
 }
 
-await downloadContents({ epub });
+await downloadChapters({ epub });
 
 bundleEpub({ epub });

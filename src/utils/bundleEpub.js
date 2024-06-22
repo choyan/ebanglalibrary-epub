@@ -8,8 +8,8 @@ import { titlePage } from "../templates/titlePage.js";
 let zip = new JSZip();
 
 // Function to add files to the ZIP
-const addFilesToZip = async (zip, files) => {
-  for (const filePath of files) {
+const addFilesToZip = async ({ zip, filePaths }) => {
+  for (const filePath of filePaths) {
     try {
       const fileContent = await fs.readFileSync(filePath);
       // Add file to the ZIP
@@ -34,7 +34,7 @@ export const bundleEpub = async ({ epub }) => {
     await zip.file("OEBPS/Images/cover.jpg", readFileSync("./temp/cover.jpg"));
     zip.file("OEBPS/titlepage.xhtml", titlePage());
 
-    await addFilesToZip(zip, filePaths);
+    await addFilesToZip({ zip, filePaths });
     // Generate the ZIP file as a Node.js Buffer
     const content = await zip.generateAsync({ type: "nodebuffer" });
 
