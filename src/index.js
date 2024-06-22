@@ -9,7 +9,7 @@ import { cleanFolder } from "./utils/cleanFolder.js";
 import { bundleEpub } from "./utils/bundleEpub.js";
 
 const URL =
-  "https://www.ebanglalibrary.com/books/%e0%a6%a4%e0%a6%bf%e0%a6%a8-%e0%a6%97%e0%a7%8b%e0%a6%af%e0%a6%bc%e0%a7%87%e0%a6%a8%e0%a7%8d%e0%a6%a6%e0%a6%be-%e0%a6%ad%e0%a6%b2%e0%a6%bf%e0%a6%89%e0%a6%ae-%e0%a7%a7-%e0%a7%a8/";
+  "https://www.ebanglalibrary.com/books/%e0%a6%95%e0%a6%a8%e0%a7%8d%e0%a6%9f%e0%a7%8d%e0%a6%b0%e0%a7%8b%e0%a6%b2-%e0%a6%ac%e0%a7%87%e0%a6%97-%e0%a6%ac%e0%a6%be%e0%a6%b8%e0%a7%8d%e0%a6%9f%e0%a6%be%e0%a6%b0%e0%a7%8d%e0%a6%a1-%e0%a7%ad/";
 const coverImagePath = path.resolve("./temp/cover.jpg");
 
 // Usage

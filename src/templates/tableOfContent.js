@@ -1,6 +1,5 @@
 export const tableOfContent = ({ chapters }) => {
   return `<?xml version='1.0' encoding='UTF-8'?>
-<!DOCTYPE html>
 <html xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>Table of Contents</title>
@@ -13,10 +12,9 @@ export const tableOfContent = ({ chapters }) => {
       </style>
     </head>
     <body>
-      <h1>Table of Contents</h1>
+      <h1>সূচিপত্র</h1>
       <nav id="toc" epub:type="toc">
         <ol>
-          <li><a href="./toc.xhtml">Table of Contents</a></li>
           ${chapters
             .map(
               (chapter) =>

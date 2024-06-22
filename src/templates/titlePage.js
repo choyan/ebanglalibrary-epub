@@ -12,8 +12,3 @@ export function titlePage() {
 </html>
 `;
 }
-
-// <style type="text/css" title="override_css">
-//     @page {padding: 0pt; margin:0pt}
-//     body { text-align: center; padding:0pt; margin: 0pt; }
-// </style>
