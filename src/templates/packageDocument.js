@@ -1,6 +1,6 @@
 import { escapeXml } from "../utils/escapeXml.js";
 
-export const generateContent = ({ epub }) => {
+export const packageDocument = ({ epub }) => {
   const { description, title, chapters, author, publisher } = epub;
   const modified = new Date().toISOString().split(".")[0] + "Z";
 
@@ -49,6 +49,7 @@ export const generateContent = ({ epub }) => {
     </manifest>
     <spine>
       <itemref idref="titlepage"/>
+      <itemref idref="toc"/>
       ${chapters
         .map((chapter) => `<itemref idref="chapter-${chapter.id}" />`)
         .join("\n")}

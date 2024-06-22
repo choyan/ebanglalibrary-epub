@@ -1,9 +1,9 @@
 import fs, { readFileSync } from "fs";
 import JSZip from "jszip";
-import { generateContainer } from "../templates/generateContainer.js";
-import { generateContent } from "../templates/generateContent.js";
-import { generateToc } from "../templates/generateToc.js";
-import { generateTitlePage } from "../templates/generateTitlePage.js";
+import { container } from "../templates/container.js";
+import { packageDocument } from "../templates/packageDocument.js";
+import { tableOfContent } from "../templates/tableOfContent.js";
+import { titlePage } from "../templates/titlePage.js";
 
 let zip = new JSZip();
 
@@ -28,11 +28,11 @@ export const bundleEpub = async ({ epub }) => {
 
   try {
     zip.file("mimetype", "application/epub+zip");
-    zip.file("META-INF/container.xml", generateContainer());
-    zip.file("OEBPS/content.opf", generateContent({ epub }));
-    zip.file("OEBPS/toc.xhtml", generateToc({ chapters: epub.chapters }));
+    zip.file("META-INF/container.xml", container());
+    zip.file("OEBPS/content.opf", packageDocument({ epub }));
+    zip.file("OEBPS/toc.xhtml", tableOfContent({ chapters: epub.chapters }));
     await zip.file("OEBPS/Images/cover.jpg", readFileSync("./temp/cover.jpg"));
-    zip.file("OEBPS/titlepage.xhtml", generateTitlePage());
+    zip.file("OEBPS/titlepage.xhtml", titlePage());
 
     await addFilesToZip(zip, filePaths);
     // Generate the ZIP file as a Node.js Buffer

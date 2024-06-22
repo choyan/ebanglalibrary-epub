@@ -1,5 +1,5 @@
 import { loadData } from "./utils/loadData.js";
-import { generateChapter } from "./templates/generateChapter.js";
+import { chapter } from "./templates/chapter.js";
 import serialize from "w3c-xmlserializer";
 import fs from "fs";
 
@@ -15,7 +15,7 @@ export const downloadSinglePage = async ({ url: URL, outputPath }) => {
     contents.push(serialize(paragraph));
   });
 
-  const content = generateChapter({ pageTitle, contents });
+  const content = chapter({ pageTitle, contents });
   await fs.writeFileSync(outputPath, content);
   console.log("Written chapter: ", outputPath);
 };

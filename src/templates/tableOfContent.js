@@ -1,7 +1,7 @@
-export const generateToc = ({ chapters }) => {
+export const tableOfContent = ({ chapters }) => {
   return `<?xml version='1.0' encoding='UTF-8'?>
-  <!DOCTYPE html>
-    <html xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/1999/xhtml">
+<!DOCTYPE html>
+<html xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>Table of Contents</title>
       <meta charset="UTF-8" />
@@ -26,6 +26,6 @@ export const generateToc = ({ chapters }) => {
         </ol>
       </nav>
     </body>
-    </html>
+</html>
   `;
 };
