@@ -47,7 +47,7 @@ export const generateContent = ({ epub }) => {
         .join("\n")}
         <item id="cover" href="Images/cover.jpg" media-type="image/jpeg"/>
     </manifest>
-    <spine toc="ncx">
+    <spine>
       <itemref idref="titlepage"/>
       ${chapters
         .map((chapter) => `<itemref idref="chapter-${chapter.id}" />`)

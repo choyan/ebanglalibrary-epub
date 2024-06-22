@@ -1,5 +1,6 @@
 export const generateToc = ({ chapters }) => {
   return `<?xml version='1.0' encoding='UTF-8'?>
+  <!DOCTYPE html>
     <html xmlns:epub="http://www.idpf.org/2007/ops" xmlns="http://www.w3.org/1999/xhtml">
     <head>
       <title>Table of Contents</title>

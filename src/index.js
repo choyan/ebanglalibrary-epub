@@ -5,12 +5,11 @@ import { nanoid } from "nanoid";
 import { downloadSinglePage } from "./single.js";
 
 import { loadData } from "./utils/loadData.js";
-import { writeFile } from "./utils/writeFile.js";
 import { cleanFolder } from "./utils/cleanFolder.js";
 import { bundleEpub } from "./utils/bundleEpub.js";
 
 const URL =
-  "https://www.ebanglalibrary.com/books/%e0%a6%aa%e0%a6%b0%e0%a6%be%e0%a6%b0%e0%a7%8d%e0%a6%a5%e0%a6%aa%e0%a6%b0%e0%a6%a4%e0%a6%be%e0%a6%b0-%e0%a6%85%e0%a6%b0%e0%a7%8d%e0%a6%a5%e0%a6%a8%e0%a7%80%e0%a6%a4%e0%a6%bf-%e0%a6%86%e0%a6%95/";
+  "https://www.ebanglalibrary.com/books/%e0%a6%a4%e0%a6%bf%e0%a6%a8-%e0%a6%97%e0%a7%8b%e0%a6%af%e0%a6%bc%e0%a7%87%e0%a6%a8%e0%a7%8d%e0%a6%a6%e0%a6%be-%e0%a6%ad%e0%a6%b2%e0%a6%bf%e0%a6%89%e0%a6%ae-%e0%a7%a7-%e0%a7%a8/";
 const coverImagePath = path.resolve("./temp/cover.jpg");
 
 // Usage
@@ -29,7 +28,7 @@ const epub = {
   publisher: "anonymous",
   description: document.querySelector("title").textContent,
   tags: document.querySelector(".entry-terms-ld_course_category a").textContent,
-  chapters: [], // Will be populated later as required
+  chapters: [],
 };
 
 console.log(`Downloading Ebook: ${epub.title}`);
@@ -50,30 +49,16 @@ const coverURL = document
   .querySelector(".entry-image-single img")
   .getAttribute("src");
 
-downloadImage(coverURL, coverImagePath)
-  .then(() => {
-    console.log(`Cover Image downloaded and saved to ${coverImagePath}`);
-  })
-  .catch((error) => {
-    console.error("Error:", error);
+await downloadImage(coverURL, coverImagePath);
+
+async function downloadContents({ epub }) {
+  const downloadPromises = epub.chapters.map((chapter) => {
+    const outputPath = `${outputFolder}/${chapter.id}.xhtml`;
+    return downloadSinglePage({ url: chapter.url, outputPath });
   });
-
-async function downloadContents() {
-  await Promise.all(
-    epub.chapters.map(async (chapter) => {
-      const outputPath = `${outputFolder}/${chapter.id}.xhtml`;
-      const { content } = await downloadSinglePage({
-        url: chapter.url,
-      });
-      writeFile({ outputPath, data: content });
-
-      console.log(
-        `Downloaded chapter: ${chapter.name} to => ${chapter.id}.xhtml`,
-      );
-    }),
-  );
+  await Promise.all(downloadPromises);
 }
 
-await downloadContents();
+await downloadContents({ epub });
 
 bundleEpub({ epub });

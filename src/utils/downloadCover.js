@@ -12,6 +12,7 @@ export const downloadImage = async (url, outputPath) => {
     const writer = fs.createWriteStream(outputPath);
 
     response.data.pipe(writer);
+    console.log(`Cover Image downloaded and saved to ${outputPath}`);
 
     return new Promise((resolve, reject) => {
       writer.on("finish", resolve);

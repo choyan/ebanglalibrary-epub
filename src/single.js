@@ -1,8 +1,10 @@
 import { loadData } from "./utils/loadData.js";
 import { generateChapter } from "./templates/generateChapter.js";
 import serialize from "w3c-xmlserializer";
+// import { writeFile } from "./utils/writeFile.js";
+import fs from "fs";
 
-export const downloadSinglePage = async ({ url: URL }) => {
+export const downloadSinglePage = async ({ url: URL, outputPath }) => {
   const { document } = await loadData({ url: URL });
 
   const pageTitle = document.querySelector("title").textContent;
@@ -15,12 +17,7 @@ export const downloadSinglePage = async ({ url: URL }) => {
   });
 
   const content = generateChapter({ pageTitle, contents });
-
-  return {
-    content,
-  };
+  await fs.writeFileSync(outputPath, content);
+  console.log("Written chapter: ", outputPath);
+  // await writeFile({ outputPath, data: content });
 };
-
-downloadSinglePage({
-  url: "https://www.ebanglalibrary.com/lessons/%e0%a6%b6%e0%a7%81%e0%a6%af%e0%a6%bc%e0%a6%b0%e0%a7%87%e0%a6%b0-%e0%a6%ac%e0%a6%be%e0%a6%9a%e0%a7%8d%e0%a6%9a%e0%a6%be%e0%a6%a6%e0%a7%87%e0%a6%b0-%e0%a6%85%e0%a6%b0%e0%a7%8d%e0%a6%a5/",
-});
