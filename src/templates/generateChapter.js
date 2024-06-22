@@ -5,7 +5,6 @@ export const generateChapter = ({ pageTitle, contents }) => {
 <head>
 <title>${pageTitle}</title>
 <meta charset="UTF-8"/>
-<meta http-equiv="Content-Type" content="text/html; charset=utf-8"/>
 </head>
 <body>
 <section epub:type="bodymatter">
