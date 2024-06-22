@@ -1,7 +1,8 @@
 import axios from "axios";
 import fs from "fs";
+import { COVER_IMAGE_PATH } from "../config";
 
-export const downloadImage = async (url, outputPath) => {
+export const downloadImage = async (url) => {
   try {
     const response = await axios({
       url,
@@ -9,10 +10,10 @@ export const downloadImage = async (url, outputPath) => {
       responseType: "stream",
     });
 
-    const writer = fs.createWriteStream(outputPath);
+    const writer = fs.createWriteStream(COVER_IMAGE_PATH);
 
     response.data.pipe(writer);
-    console.log(`Cover Image downloaded and saved to ${outputPath}`);
+    console.log(`Cover Image downloaded and saved to ${COVER_IMAGE_PATH}`);
 
     return new Promise((resolve, reject) => {
       writer.on("finish", resolve);
