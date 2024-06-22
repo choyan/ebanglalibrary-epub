@@ -1,5 +1,4 @@
 /temp
 /node_modules
 .DS_Store
-output.epub
-/output
+*.epub
