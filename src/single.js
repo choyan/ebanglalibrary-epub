@@ -1,7 +1,6 @@
 import { loadData } from "./utils/loadData.js";
 import { generateChapter } from "./templates/generateChapter.js";
 import serialize from "w3c-xmlserializer";
-// import { writeFile } from "./utils/writeFile.js";
 import fs from "fs";
 
 export const downloadSinglePage = async ({ url: URL, outputPath }) => {
@@ -19,5 +18,4 @@ export const downloadSinglePage = async ({ url: URL, outputPath }) => {
   const content = generateChapter({ pageTitle, contents });
   await fs.writeFileSync(outputPath, content);
   console.log("Written chapter: ", outputPath);
-  // await writeFile({ outputPath, data: content });
 };

@@ -1,5 +1,4 @@
 import { JSDOM } from "jsdom";
-
 import axios from "axios";
 
 export const loadData = async ({ url }) => {

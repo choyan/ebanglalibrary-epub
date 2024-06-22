@@ -20,7 +20,6 @@ export const generateToc = ({ chapters }) => {
           ${chapters
             .map(
               (chapter) =>
-                // prettier-ignore
                 `<li id="chapter-${chapter.id}"><a epub:type="bodymatter" href="./${chapter.id}.xhtml">${chapter.name}</a></li>`,
             )
             .join("\n")}

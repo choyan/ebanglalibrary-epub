@@ -1,11 +1,9 @@
 import fs, { readFileSync } from "fs";
 import JSZip from "jszip";
-import { slugify } from "../utils/slugify.js";
 import { generateContainer } from "../templates/generateContainer.js";
 import { generateContent } from "../templates/generateContent.js";
 import { generateToc } from "../templates/generateToc.js";
 import { generateTitlePage } from "../templates/generateTitlePage.js";
-import path from "path";
 
 let zip = new JSZip();
 
@@ -13,8 +11,6 @@ let zip = new JSZip();
 const addFilesToZip = async (zip, files) => {
   for (const filePath of files) {
     try {
-      // Read file as buffer asynchronously
-      console.log(filePath, filePath.split("/")[3], "sdfsdf");
       const fileContent = await fs.readFileSync(filePath);
       // Add file to the ZIP
       zip.file(`OEBPS/${filePath.split("/")[3]}`, fileContent);
@@ -30,8 +26,6 @@ export const bundleEpub = async ({ epub }) => {
     (chapter) => `./temp/OEBPS/${chapter.id}.xhtml`,
   );
 
-  console.log({ filePaths });
-
   try {
     zip.file("mimetype", "application/epub+zip");
     zip.file("META-INF/container.xml", generateContainer());
@@ -46,17 +40,8 @@ export const bundleEpub = async ({ epub }) => {
 
     // Save the generated ZIP file to the filesystem
     await fs.writeFileSync("output.epub", content);
-    console.log("ZIP file created successfully.");
+    console.log("Epub file created successfully at output.epub");
   } catch (err) {
     console.error("Error generating ZIP file:", err);
   }
-
-  // zip.folder('OEBPS',)
-
-  // return zip
-  //   .generateNodeStream({ type: "nodebuffer", streamFiles: true })
-  //   .pipe(fs.createWriteStream("out.epub"))
-  //   .on("finish", function () {
-  //     console.log("out.epub written.");
-  //   });
 };
