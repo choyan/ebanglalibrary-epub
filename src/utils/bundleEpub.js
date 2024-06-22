@@ -14,7 +14,7 @@ const addFilesToZip = async ({ zip, filePaths }) => {
       const fileContent = await fs.readFileSync(filePath);
       // Add file to the ZIP
       zip.file(`OEBPS/${filePath.split("/")[3]}`, fileContent);
-      console.log(`Added ${filePath.split("/")[3]} to ZIP`);
+      console.log(`Added ${filePath.split("/")[3]}`);
     } catch (err) {
       console.error(`Error reading file ${filePath}:`, err);
     }
@@ -39,8 +39,8 @@ export const bundleEpub = async ({ epub }) => {
     const content = await zip.generateAsync({ type: "nodebuffer" });
 
     // Save the generated ZIP file to the filesystem
-    await fs.writeFileSync("output.epub", content);
-    console.log("Epub file created successfully at output.epub");
+    await fs.writeFileSync(`${epub.title}.epub`, content, { encoding: "utf8" });
+    console.log(`Epub file created successfully at ${epub.title}.epub`);
   } catch (err) {
     console.error("Error generating ZIP file:", err);
   }

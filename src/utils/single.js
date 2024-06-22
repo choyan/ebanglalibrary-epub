@@ -3,7 +3,7 @@ import serialize from "w3c-xmlserializer";
 import { loadData } from "./loadData.js";
 import { chapter } from "../templates/chapter.js";
 
-export const downloadSingleChapter = async ({ url: URL, outputPath, name }) => {
+export const downloadChapter = async ({ url: URL, outputPath, name }) => {
   const { document } = await loadData({ url: URL });
 
   const pageTitle = document.querySelector("title").textContent;

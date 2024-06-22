@@ -2,7 +2,7 @@ import path from "path";
 import { downloadImage } from "./utils/downloadCover.js";
 import { nanoid } from "nanoid";
 
-import { downloadSingleChapter } from "./utils/single.js";
+import { downloadChapter } from "./utils/single.js";
 
 import { loadData } from "./utils/loadData.js";
 import { cleanFolder } from "./utils/cleanFolder.js";
@@ -50,7 +50,7 @@ await downloadImage(coverURL, coverImagePath);
 async function downloadChapters({ epub }) {
   const downloadPromises = epub.chapters.map((chapter) => {
     const outputPath = `${outputFolder}/${chapter.id}.xhtml`;
-    return downloadSingleChapter({
+    return downloadChapter({
       url: chapter.url,
       outputPath,
       name: chapter.name,
