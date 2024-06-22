@@ -26,6 +26,7 @@ export const bundleEpub = async ({ epub }) => {
     (chapter) => `./temp/OEBPS/${chapter.id}.xhtml`,
   );
 
+  console.log("-------Generating epub--------");
   try {
     zip.file("mimetype", "application/epub+zip");
     zip.file("META-INF/container.xml", container());

@@ -1,4 +1,4 @@
-import { downloadImage } from "./utils/downloadCover.js";
+import { downloadCover } from "./utils/downloadCover.js";
 import { nanoid } from "nanoid";
 
 import { cleanFolder } from "./utils/cleanFolder.js";
@@ -6,7 +6,7 @@ import { loadData } from "./utils/loadData.js";
 import { downloadChapter } from "./utils/downloadChapter.js";
 import { bundleEpub } from "./utils/bundleEpub.js";
 
-import { COVER_IMAGE_CLASS, COVER_IMAGE_PATH, DOWNLOAD_URL } from "./config.js";
+import { COVER_IMAGE_CLASS, DOWNLOAD_URL } from "./config.js";
 
 const outputFolder = "./temp/OEBPS";
 cleanFolder(outputFolder);
@@ -42,7 +42,7 @@ document
 
 const coverURL = document.querySelector(COVER_IMAGE_CLASS).getAttribute("src");
 
-await downloadImage(coverURL);
+await downloadCover(coverURL);
 
 async function downloadChapters({ epub }) {
   const downloadPromises = epub.chapters.map((chapter) => {

@@ -16,6 +16,10 @@ export const downloadChapter = async ({ url: URL, outputPath, name }) => {
   });
 
   const content = chapter({ pageTitle, contents });
-  await fs.writeFileSync(outputPath, content);
+  try {
+    await fs.writeFileSync(outputPath, content);
+  } catch (err) {
+    console.log("Failed to write chapter", err);
+  }
   console.log("Written chapter: ", name);
 };

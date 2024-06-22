@@ -1,8 +1,8 @@
 import axios from "axios";
 import fs from "fs";
-import { COVER_IMAGE_PATH } from "../config";
+import { COVER_IMAGE_PATH } from "../config.js";
 
-export const downloadImage = async (url) => {
+export const downloadCover = async (url) => {
   try {
     const response = await axios({
       url,
