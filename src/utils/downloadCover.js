@@ -1,9 +1,17 @@
 import axios from "axios";
 import fs from "fs";
-import { COVER_IMAGE_PATH } from "../config.js";
+import {
+  COVER_IMAGE_CLASS,
+  COVER_IMAGE_PATH,
+  ALTERNATE_COVER,
+} from "../config.js";
 
-export const downloadCover = async (url) => {
+export const downloadCover = async (document) => {
   try {
+    const url =
+      document.querySelector(COVER_IMAGE_CLASS)?.getAttribute("src") ??
+      ALTERNATE_COVER;
+
     const response = await axios({
       url,
       method: "GET",

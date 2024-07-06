@@ -26,7 +26,7 @@ export const bundleEpub = async ({ epub }) => {
     (chapter) => `./temp/OEBPS/${chapter.id}.xhtml`,
   );
 
-  console.log("-------Generating epub--------");
+  console.log("------- Generating Epub --------");
   try {
     zip.file("mimetype", "application/epub+zip");
     zip.file("META-INF/container.xml", container());
@@ -39,8 +39,12 @@ export const bundleEpub = async ({ epub }) => {
     // Generate the ZIP file as a Node.js Buffer
     const content = await zip.generateAsync({ type: "nodebuffer" });
 
+    const title = epub.title.replace("/", "-");
+
     // Save the generated ZIP file to the filesystem
-    await fs.writeFileSync(`${epub.title}.epub`, content, { encoding: "utf8" });
+    await fs.writeFileSync(`${title}.epub`, content, {
+      encoding: "utf8",
+    });
     console.log(`Epub file created successfully at ${epub.title}.epub`);
   } catch (err) {
     console.error("Error generating ZIP file:", err);

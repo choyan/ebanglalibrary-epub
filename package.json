@@ -5,24 +5,36 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "gen": "node src/index.js",
-    "lint": "eslint",
-    "test": "echo \"Error: no test specified\" && exit 1"
+    "bundle": "node src/index.js",
+    "ink": "npx babel src/ink-test.js -o src/cli.js && node --no-warnings src/cli.js",
+    "lint": "eslint"
   },
   "author": "Zahidul Hossain",
   "license": "MIT",
   "dependencies": {
+    "@inkjs/ui": "^2.0.0",
     "axios": "^1.7.2",
-    "cheerio": "^1.0.0-rc.12",
+    "ink": "^5.0.1",
+    "ink-select-input": "^6.0.0",
+    "ink-text-input": "^6.0.0",
     "jsdom": "^24.1.0",
     "jszip": "^3.10.1",
     "nanoid": "^5.0.7",
+    "react": "^18.3.1",
     "w3c-xmlserializer": "^5.0.0"
   },
   "devDependencies": {
+    "@babel/cli": "^7.24.7",
+    "@babel/core": "^7.24.7",
+    "@babel/preset-react": "^7.24.7",
     "@eslint/js": "^9.3.0",
     "eslint": "^9.3.0",
     "globals": "^15.3.0",
     "prettier": "3.2.5"
+  },
+  "babel": {
+    "presets": [
+      "@babel/preset-react"
+    ]
   }
 }
