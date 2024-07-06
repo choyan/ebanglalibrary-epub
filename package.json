@@ -5,7 +5,7 @@
   "type": "module",
   "main": "src/index.js",
   "scripts": {
-    "gen": "node src/index.js",
+    "bundle": "node src/index.js",
     "lint": "eslint",
     "test": "echo \"Error: no test specified\" && exit 1"
   },
