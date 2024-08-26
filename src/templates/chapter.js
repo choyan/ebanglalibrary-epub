@@ -4,10 +4,6 @@ export const chapter = ({ pageTitle, contents }) => {
 <head>
 <title>${pageTitle}</title>
 <style>
-@page {
-  margin-bottom: 5pt;
-  margin-top: 5pt;
-}
 
 h1,
 .ftwp-heading {
