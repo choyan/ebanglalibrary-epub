@@ -35,6 +35,7 @@ export const bundleEpub = async ({ epub }) => {
     await zip.file("OEBPS/Images/cover.jpg", readFileSync("./temp/cover.jpg"));
     zip.file("OEBPS/titlepage.xhtml", titlePage());
 
+    filePaths.push("./temp/OEBPS/intro.xhtml");
     await addFilesToZip({ zip, filePaths });
     // Generate the ZIP file as a Node.js Buffer
     const content = await zip.generateAsync({ type: "nodebuffer" });

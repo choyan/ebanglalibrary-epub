@@ -34,6 +34,7 @@ export const packageDocument = ({ epub }) => {
 
     <manifest>
       <item id="titlepage" href="titlepage.xhtml" media-type="application/xhtml+xml"/>
+      <item id="intro" href="intro.xhtml" media-type="application/xhtml+xml"/>
       <item id="toc" href="toc.xhtml" media-type="application/xhtml+xml" properties="nav" />
       ${chapters
         .map(
@@ -49,6 +50,7 @@ export const packageDocument = ({ epub }) => {
     </manifest>
     <spine>
       <itemref idref="titlepage"/>
+      <itemref idref="intro"/>
       <itemref idref="toc"/>
       ${chapters
         .map((chapter) => `<itemref idref="chapter-${chapter.id}" />`)

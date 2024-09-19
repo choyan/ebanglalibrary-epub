@@ -5,6 +5,8 @@ import { cleanFolder } from "./utils/cleanFolder.js";
 import { loadData } from "./utils/loadData.js";
 import { downloadChapter } from "./utils/downloadChapter.js";
 import { bundleEpub } from "./utils/bundleEpub.js";
+import { collectPageContent } from "./utils/collectPageContent.js";
+import { prepareIntro } from "./utils/prepareIntro.js";
 
 // import { DOWNLOAD_URL } from "./config.js";
 
@@ -22,8 +24,10 @@ export async function downloadBook({
     url: DOWNLOAD_URL,
   });
 
+  const pageTitle = document.querySelector("title").textContent;
+
   const epub = {
-    title: document.querySelector("title").textContent,
+    title: pageTitle,
     author:
       document.querySelector(".entry-terms-authors a")?.textContent ||
       "unknown author", // Safe navigation in case the element doesn't exist
@@ -47,6 +51,12 @@ export async function downloadBook({
           .textContent.replace(/\n/g, ""),
       });
     });
+
+  await prepareIntro({
+    pageTitle,
+    document,
+    outputPath: `${outputFolder}/intro.xhtml`,
+  });
 
   await downloadCover(document);
 
