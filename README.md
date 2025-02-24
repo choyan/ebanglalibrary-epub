@@ -1,5 +1,7 @@
 # Ebangla Library Downloader
 
+## Due to Cloudflare Protection, the download is not working currently. I will try to find some time to address the issue and fix the downloading.
+
 This Node.js library enables users to download books from [Ebangla Library](https://www.ebanglalibrary.com/) as EPUB files for offline reading. It converts the online books available on the platform into a portable e-book format.
 
 We extend our sincere gratitude to the Ebangla Library team for their dedication in making Bengali literature accessible to a wider audience. Their efforts have significantly contributed to the preservation and dissemination of Bengali books.
